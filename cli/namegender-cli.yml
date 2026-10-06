@@ -1,0 +1,19 @@
+generated: '2026-10-06'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://namegender.com/client-libraries
+sources:
+- https://namegender.com/client-libraries
+install:
+- method: npm
+  command: npm install -g namegender
+commands:
+- group: name lookup
+  commands:
+  - npx namegender Andrea --country IT
+  - npx namegender --email jane.doe@example.com
+- group: bulk CSV
+  commands:
+  - cat names.txt | npx namegender --csv > genders.csv
+binary: namegender
+docs: https://namegender.com/client-libraries

@@ -1,31 +1,138 @@
 aid: namegender
 name: NameGender
-description: 'NameGender is a company surfaced via the API Evangelist harvest backlog (source: new-submission)
-  and added to the network as a stub for full-pipeline profiling.'
+description: NameGender provides a gender detection API that returns gender, probability, and supporting evidence for first names, full names,
+  emails, or usernames. It supports multiple languages and countries, offers a free tier with 100 daily credits, and includes detailed documentation,
+  pricing, client libraries, and research resources.
 url: https://raw.githubusercontent.com/api-evangelist/namegender/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:new-submission
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-06 (modular-v1; was harvest)
 specificationVersion: '0.20'
 created: '2026-10-06'
 modified: '2026-10-06'
 tags:
-- Company
-apis: []
+- Gender
+- Names
+- Data Enrichment
+- API
+- Demographics
+- Bulk
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Spectral
+  url: rules/namegender-rules.yml
+- type: JSONLD
+  url: json-ld/namegender-context.jsonld
+- type: Vocabulary
+  url: vocabulary/namegender-vocabulary.yml
+- type: Idempotency
+  url: conventions/namegender-conventions.yml
+- type: Conventions
+  url: conventions/namegender-conventions.yml
+- type: Conformance
+  url: conformance/namegender-conformance.yml
+- type: Plans
+  url: plans/namegender-plans-pricing.yml
+- type: Webhooks
+  url: asyncapi/namegender-webhooks.yml
+- type: DataModel
+  url: data-model/namegender-data-model.yml
+- type: CLI
+  url: cli/namegender-cli.yml
+- type: ChangeLog
+  url: changelog/namegender-changelog.yml
+- type: Security
+  url: https://namegender.com/changelog#security
+- type: Deprecation
+  url: lifecycle/namegender-lifecycle.yml
+- type: Lifecycle
+  url: lifecycle/namegender-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/namegender-problem-types.yml
+- type: LLMsTxt
+  url: llms/namegender-llms.txt
+- type: SecurityTxt
+  url: well-known/namegender-security.txt
+- type: WellKnown
+  url: well-known/namegender-well-known.yml
+- type: Hosts
+  url: hosts/namegender-hosts.yml
+- type: Packages
+  url: packages/namegender-packages.yml
+- type: Support
+  url: https://namegender.com/support
+- type: StatusPage
+  url: https://namegender.com/status
+- type: SDKs
+  url: https://namegender.com/client-libraries
+- type: ChangeLog
+  url: https://namegender.com/changelog
+- type: VulnerabilityDisclosure
+  url: security/namegender-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/namegender-domain-security.yml
 - type: Website
   url: https://namegender.com/apis.json
 - type: Documentation
   url: https://namegender.com/docs
-x-submission-notes: 'relist check: clear: not on the delisting registry. Personal-data inference (gender
-  from names/emails) -- enrichment PII guardrail applies to examples.'
-x-submission-probe: root 200; /docs 200; /apis.json 200 application/json (aid namegender.com, 0.19); /openapi.json
-  200 OpenAPI 3.1.0, 10 paths, server https://namegender.com, bearerAuth+apiKeyHeader; /llms.txt 200;
-  invented path 404 (real 404). GET /api/v1/gender?name=maria -> 401 JSON missing_key.
+- type: APIReference
+  url: https://namegender.com/openapi.json
+- type: GettingStarted
+  url: https://namegender.com/docs#quickstart
+- type: Pricing
+  url: https://namegender.com/pricing
+- type: SignUp
+  url: https://namegender.com/register
+- type: TermsOfService
+  url: https://namegender.com/terms
+- type: PrivacyPolicy
+  url: https://namegender.com/privacy-policy
+- type: Blog
+  url: https://namegender.com/blog
+apis:
+- name: NameGender API
+  description: NameGender provides a gender detection API that returns gender, probability, and supporting evidence for names, emails, usernames,
+    with free tier and detailed docs.
+  humanURL: https://namegender.com/docs
+  baseURL: https://namegender.com
+  aid: namegender:namegender-api
+- aid: namegender:namegender-api-api
+  name: NameGender API API
+  description: 'Every lookup endpoint accepts both GET and POST so it can be called from a browser, a shell or a server. All paths live under
+    `/api/v1`;
+
+    a future breaking change will get a new version prefix instead of altering these.'
+  humanURL: https://namegender.com/changelog
+  baseURL: https://namegender.com
+  properties:
+  - type: OpenAPI
+    url: openapi/_original/namegender-api-openapi.json
+  - type: JSONSchema
+    url: json-schema/namegender-countries-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-batch-job-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-bulk-request-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-bulk-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-account-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-single-response-schema.json
+x-submission-notes: 'relist check: clear: not on the delisting registry. Personal-data inference (gender from names/emails) -- enrichment PII
+  guardrail applies to examples.'
+x-submission-probe: root 200; /docs 200; /apis.json 200 application/json (aid namegender.com, 0.19); /openapi.json 200 OpenAPI 3.1.0, 10 paths,
+  server https://namegender.com, bearerAuth+apiKeyHeader; /llms.txt 200; invented path 404 (real 404). GET /api/v1/gender?name=maria -> 401 JSON
+  missing_key.
 x-submitted-by: info@namegender.com (apis.io/add, 2026-10-05T23:22:53.319Z)
+x-enrichment:
+  date: '2026-10-06'
+  status: enriched
+  artifacts_added: 20
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

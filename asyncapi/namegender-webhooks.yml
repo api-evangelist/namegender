@@ -1,0 +1,29 @@
+generated: '2026-10-06'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://namegender.com/docs/ai/webhooks.md
+sources:
+- https://namegender.com/docs/ai/webhooks.md
+description: NameGender webhooks are delivered via HTTPS POST with a JSON body. Each request includes a `NameGender-Signature` header containing
+  a timestamp and one or two HMAC‑SHA256 signatures computed with the webhook secret. The secret is read from the environment variable `NAMEGENDER_WEBHOOK_SECRET`.
+  Requests must be verified before processing; invalid signatures or timestamps older than 5 minutes must be rejected with HTTP 400. The `NameGender-Event-Id`
+  header (same as the `id` field in the body) is used for deduplication. Delivery attempts are indicated by the `NameGender-Delivery-Attempt`
+  header, starting at 1 and increasing up to 8. Failed deliveries are retried with back‑off intervals of 1 min, 5 min, 30 min, 2 h, 6 h, 12 h,
+  and 24 h; after 8 attempts the event is dropped.
+events:
+- event: batch.completed
+  description: A file job completed.
+- event: batch.failed
+  description: A file job failed.
+- event: credits.low
+  description: Credits will run out within a week.
+- event: credits.depleted
+  description: Credits ran out.
+- event: webhook.test
+  description: Test event from the dashboard.
+delivery:
+  signature: NameGender-Signature
+  content_type: application/json
+note: 'Signature format: `t=<unix seconds>,v1=<hex>`; `v1` is HMAC‑SHA256 of "<t>.<raw body>" using the webhook secret. During secret rotation
+  a second `v1` may be present and any matching signature is accepted.'
+docs: https://namegender.com/docs/ai/webhooks.md

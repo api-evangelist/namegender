@@ -1,0 +1,88 @@
+generated: '2026-10-06'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://namegender.com/changelog
+sources:
+- https://namegender.com/changelog
+entries:
+- breaking: false
+  highlights:
+  - 'Added Country from a language tag or an IP address: locale, ip and country_source'
+  - The gender endpoints and the bulk endpoint accept locale, a language tag such as it-IT or pt_BR, and ip, the end user's IP address.
+  - When country is not sent, the tag's region is used as the country, and when there is no regional tag either, the country of the IP address;
+    a sign-up form can pass the browser language and get the Italian answer for Andrea.
+  - Requests without these parameters behave as before.
+  date: '2026-10-06'
+- breaking: false
+  highlights:
+  - Japanese kanji names are read with Japanese readings
+  - In a Japanese context (country=JP, or kana alongside the kanji), kanji given names were looked up through Mandarin pronunciations, so 陽子 (Yōko)
+    came back male as "yang zi".
+  - They are now read with Japanese given-name readings from JMnedict.
+  - A name with no known reading falls back to its last kanji when that kanji is strongly gendered.
+  date: '2026-10-04'
+- breaking: false
+  highlights:
+  - Correct US counts restored for 6,779 common names
+  - 'An import error had overwritten the US counts of 6,779 of the most looked-up names with wrong figures: Charlie showed 2.8% female on 29,034
+    records against a true 17.3% on 219,878.'
+  - Every US row now matches the official Social Security Administration files, so sample_size and, for some names, probability change for these
+    names.
+  date: '2026-09-28'
+- breaking: false
+  highlights:
+  - Scotland and Northern Ireland birth counts added
+  - Counted birth registrations from Scotland and Northern Ireland now contribute to results for country=GB, alongside England and Wales.
+  date: '2026-09-28'
+- breaking: false
+  highlights:
+  - Webhooks
+  - Register an HTTPS endpoint in the dashboard to receive batch.completed, batch.failed, credits.low and credits.depleted events, plus webhook.test
+    on demand.
+  - Deliveries are signed and retried.
+  - Receivers should answer 2xx to event types they do not handle, because new types can be added to v1.
+  date: '2026-09-24'
+- breaking: false
+  highlights:
+  - 'File API: /api/v1/batches'
+  - Upload a CSV or XLSX file, let it process in the background and download the result with gender, probability, name part and name_type columns
+    added.
+  - The same pipeline as dashboard file uploads, now available to API keys.
+  date: '2026-09-24'
+- breaking: false
+  highlights:
+  - Arabic-script names reach their dictionary entries
+  - Arabic script does not write short vowels, so transliteration produced forms such as "snan" for Sinan and missed names that were in the dataset
+    with real counts.
+  - Lookups now restore the vowels before matching, which raises coverage for Arabic-script input.
+  date: '2026-09-21'
+- breaking: false
+  highlights:
+  - Revoking an API key now revokes it
+  - The revoke button in the dashboard reported success without disabling the key, so a revoked key kept working.
+  - Revocation now takes effect immediately.
+  - A key revoked before this date was never disabled and still appears as active in the dashboard; revoke any such key again.
+  date: '2026-09-20'
+- breaking: false
+  highlights:
+  - name_type on every lookup
+  - 'Every lookup returns name_type: personal, organization or role.'
+  - Company names ("Acme LLC") and role mailboxes ("Customer Service") get gender null instead of a confident guess from their first word.
+  - personal means no organization or role marker was found; it does not confirm the input is a real name.
+  date: '2026-09-17'
+- breaking: false
+  highlights:
+  - First, middle and last name in every result
+  - Lookups return first_name, middle_name and last_name parsed from the input, at no extra credit and even when gender is null.
+  - '"Smith, John" is now read surname first, and capital İ no longer leaves a stray combining dot in the returned name.'
+  date: '2026-09-17'
+- breaking: true
+  highlights:
+  - API v1 contract
+  - All endpoints live under /api/v1; unversioned paths return 404.
+  - 'The API key is accepted only in the Authorization: Bearer or X-Api-Key header, never in the query string.'
+  - Responses carry credits_charged, credits_remaining, request_id and data_version, and the HTTP status code is the only success signal.
+  date: '2026-09-16'
+current_version: v1
+note: Versioning scheme uses a /api/v1 prefix; breaking changes receive a new version prefix.
+docs: https://namegender.com/changelog

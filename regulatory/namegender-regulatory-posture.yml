@@ -1,0 +1,18 @@
+generated: '2026-10-06'
+method: probed
+source: https://namegender.com/privacy-policy
+signals:
+  data_retention:
+    note: Retains raw request logs and uploaded batch files for seven days before deletion.
+    evidence:
+      - source: https://namegender.com/privacy-policy
+        http_status: 200
+        fetched: "true"
+        quote: "Uploaded and generated batch files: 7 days after processing."
+  subprocessors:
+    note: Uses third‑party service providers as subprocessors under contracts.
+    evidence:
+      - source: https://namegender.com/privacy-policy
+        http_status: 200
+        fetched: "true"
+        quote: "We may disclose limited data to hosting, storage, email, analytics, error monitoring, payment or blockchain infrastructure providers that help operate the service, under appropriate contractual and security controls."

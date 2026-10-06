@@ -1,0 +1,14 @@
+generated: '2026-10-06'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://namegender.com/changelog
+sources:
+- https://namegender.com/changelog
+versioning:
+  scheme: path
+  current: /api/v1
+  how_selected: All endpoints live under /api/v1; unversioned paths return 404.
+deprecation:
+  policy: If a version is ever retired, the date is announced on this page and by email to account owners before it stops answering.
+status_page: null
+docs: https://namegender.com/changelog

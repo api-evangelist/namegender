@@ -1,0 +1,72 @@
+# NameGender
+
+> NameGender is a name-to-gender API and managed spreadsheet service. It returns a statistical association together with probability, evidence count, confidence, country and source, and it can return unknown when evidence is insufficient.
+
+Name-based inference does not identify an individual's gender. Preserve unknown results and evidence fields. Do not use inferred gender for employment, medical, financial, insurance, legal or eligibility decisions.
+
+The public website and the resources below are in English unless a locale-specific URL is provided. The REST API is versioned under /api/v1, uses JSON, and takes the API key in an Authorization: Bearer or X-Api-Key header. Purchased credits remain available until used.
+
+## API and product
+
+- [API documentation](https://namegender.com/docs): Authentication, endpoints, request fields, response fields, errors and code examples.
+- [OpenAPI specification](https://namegender.com/openapi.json): Machine-readable REST API contract.
+- [Full API reference for AI assistants](https://namegender.com/llms-full.txt): Every endpoint, field, error code and implementation rule in one Markdown file, generated from the OpenAPI contract.
+- [Gender API overview](https://namegender.com/gender-api): Product behaviour, inputs, response evidence, limits and quick start.
+- [Pricing](https://namegender.com/pricing): Current plans, credit quantities and billing terms.
+- [API changelog](https://namegender.com/changelog): Dated list of endpoint, field, behaviour and data changes, plus the versioning and deprecation policy.
+- [Name gender](https://namegender.com/name-gender): What a name's gender measures, unisex names with official US shares (Riley 57% female, 1880-2024), names that flip by country (Jean: 95% female in the US, 100% male in France) and names whose gender changed over time.
+- [Name gender checker](https://namegender.com/name-gender-checker): Rate-limited public checker for one name with an optional country code.
+- [Name gender database](https://namegender.com/gender-database): Data sources, counted and uncounted evidence, provenance and update model.
+- [Gender dataset guide](https://namegender.com/gender-dataset): Dataset fields, delivery choices, licensing questions and evaluation method.
+
+## AI implementation instructions
+
+Per-endpoint Markdown for coding assistants: contract, example requests, error handling, retry rules and a verification checklist.
+
+- [Gender from a name](https://namegender.com/docs/ai/name.md)
+- [Gender from an email address](https://namegender.com/docs/ai/email.md)
+- [Gender from a username](https://namegender.com/docs/ai/username.md)
+- [Bulk lookups](https://namegender.com/docs/ai/bulk.md)
+- [Country distribution](https://namegender.com/docs/ai/countries.md)
+- [Account and credits](https://namegender.com/docs/ai/account.md)
+
+## Integration guides
+
+- [Python](https://namegender.com/gender-api-python): Python client setup, single and bulk lookups, null handling and retries.
+- [JavaScript](https://namegender.com/gender-api-javascript): Node.js, Deno and Bun usage, server-side key handling and bounded batching.
+- [PHP](https://namegender.com/gender-api-php): PHP client setup, framework integration, queues and error handling.
+- [Excel](https://namegender.com/gender-api-excel): XLSX/CSV upload and Power Query guidance.
+- [Google Sheets](https://namegender.com/gender-api-google-sheets): Add-on and Apps Script workflow, credential handling and range-based processing.
+- [Client libraries](https://namegender.com/client-libraries): Current official packages, installation commands and source repositories.
+- [MCP server](https://namegender.com/docs#mcp): Use NameGender from Claude, Cursor and other Model Context Protocol clients through the namegender-mcp npm package (registry name io.github.anpekesen/namegender).
+
+## Methods and comparisons
+
+- [NameGender Research](https://namegender.com/research): Index of measured reports, methods and disclosed limitations.
+- [Gender Prediction API Benchmark 2026](https://namegender.com/research/gender-api-benchmark-2026): Results for 4,610 labelled names across 25 countries, split by country and writing system.
+- [Benchmark methodology](https://namegender.com/research/methodology): Coverage, accuracy and end-to-end definitions, holdout rules, reproducible commands and limitations.
+- [Names that change gender by country](https://namegender.com/research/names-that-change-gender-by-country): Open CC BY 4.0 dataset from official name counts in twelve national registers across ten countries (479 names flip); names such as Jean, Andrea, Kim and Toni that are mostly girls in one country and mostly boys in another. CSV: https://namegender.com/datasets/names-gender-by-country.csv
+- [How accurate is gender prediction from a name?](https://namegender.com/blog/how-accurate-is-gender-prediction-from-a-name): Coverage, accuracy when answered and end-to-end results by writing system, and how well the probability field is calibrated.
+- [65 names that change gender by country](https://namegender.com/blog/names-that-change-gender-by-country): Names recorded as mostly male in one country and mostly female in another, from counted birth registrations.
+- [How to compare gender APIs](https://namegender.com/blog/how-to-compare-gender-apis): Reproducible evaluation using coverage, accuracy when answered and end-to-end accuracy.
+- [Best gender APIs in 2026](https://namegender.com/blog/best-gender-apis): Date-stamped shortlist and buyer's test.
+- [Genderize alternatives](https://namegender.com/blog/genderize-alternatives): Migration criteria and shadow-testing method.
+- [Gender API comparison](https://namegender.com/blog/gender-api-comparison): Comparison worksheet for evidence, country handling, throughput, billing and privacy.
+- [Coverage by writing system](https://namegender.com/blog/coverage-by-script): Published fixture results and known gaps by script.
+- [Probability and evidence fields](https://namegender.com/blog/probability-confidence-and-sample-size): How to interpret probability, confidence and sample_size.
+
+## Name profiles
+
+- [Name gender profiles](https://namegender.com/names): Curated names with country-level classification, probability, sample size and source.
+- [Andrea](https://namegender.com/name/andrea/gender), [Jean](https://namegender.com/name/jean/gender), [Kim](https://namegender.com/name/kim/gender), [Deniz](https://namegender.com/name/deniz/gender), [Ayşe](https://namegender.com/name/ayse/gender): Country-aware examples where evidence and naming context are shown together.
+
+## Optional
+
+- [Bulk gender detection](https://namegender.com/bulk-gender-detection): CSV/XLSX workflow, deduplication and output design.
+- [Customer data enrichment](https://namegender.com/gender-enrichment): Backfill and ongoing enrichment patterns.
+- [Full-name processing](https://namegender.com/gender-from-full-name): Given-name extraction and naming-order limitations.
+- [Email processing](https://namegender.com/gender-from-email): Mailbox parsing and evidence limits.
+- [Username processing](https://namegender.com/gender-from-username): Username token extraction and conservative null handling.
+- [Service status](https://namegender.com/status): Current public component status.
+- [Privacy policy](https://namegender.com/privacy-policy): Current privacy terms.
+- [Data processing agreement](https://namegender.com/data-processing-agreement): Data-processing terms for customers.
