@@ -1,0 +1,31 @@
+aid: namegender
+name: NameGender
+description: 'NameGender is a company surfaced via the API Evangelist harvest backlog (source: new-submission)
+  and added to the network as a stub for full-pipeline profiling.'
+url: https://raw.githubusercontent.com/api-evangelist/namegender/refs/heads/main/apis.yml
+x-type: company
+x-source: harvest:new-submission
+x-tier: stub
+x-tier-reason: harvest
+specificationVersion: '0.20'
+created: '2026-10-06'
+modified: '2026-10-06'
+tags:
+- Company
+apis: []
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+common:
+- type: Website
+  url: https://namegender.com/apis.json
+- type: Documentation
+  url: https://namegender.com/docs
+x-submission-notes: 'relist check: clear: not on the delisting registry. Personal-data inference (gender
+  from names/emails) -- enrichment PII guardrail applies to examples.'
+x-submission-probe: root 200; /docs 200; /apis.json 200 application/json (aid namegender.com, 0.19); /openapi.json
+  200 OpenAPI 3.1.0, 10 paths, server https://namegender.com, bearerAuth+apiKeyHeader; /llms.txt 200;
+  invented path 404 (real 404). GET /api/v1/gender?name=maria -> 401 JSON missing_key.
+x-submitted-by: info@namegender.com (apis.io/add, 2026-10-05T23:22:53.319Z)
