@@ -95,23 +95,78 @@ common:
 - type: Blog
   url: https://namegender.com/blog
 apis:
-- name: NameGender API
-  description: NameGender provides a gender detection API that returns gender, probability, and supporting evidence for names, emails, usernames,
-    with free tier and detailed docs.
+- aid: namegender:namegender-account-api
+  name: NameGender Account API
+  description: Credit balance and key status.
   humanURL: https://namegender.com/docs
-  baseURL: https://namegender.com
-  aid: namegender:namegender-api
-- aid: namegender:namegender-api-api
-  name: NameGender API API
-  description: 'Every lookup endpoint accepts both GET and POST so it can be called from a browser, a shell or a server. All paths live under
-    `/api/v1`;
-
-    a future breaking change will get a new version prefix instead of altering these.'
-  humanURL: https://namegender.com/changelog
-  baseURL: https://namegender.com
+  tags:
+  - Account
   properties:
   - type: OpenAPI
-    url: openapi/_original/namegender-api-openapi.json
+    url: openapi/namegender-account-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/namegender-countries-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-batch-job-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-bulk-request-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-bulk-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-account-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-single-response-schema.json
+- aid: namegender:namegender-batches-api
+  name: NameGender Batches API
+  description: Upload a CSV or XLSX file and download it back with gender columns added.
+  humanURL: https://namegender.com/docs
+  tags:
+  - Batches
+  properties:
+  - type: OpenAPI
+    url: openapi/namegender-batches-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/namegender-countries-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-batch-job-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-bulk-request-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-bulk-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-account-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-single-response-schema.json
+- aid: namegender:namegender-gender-api
+  name: NameGender Gender API
+  description: Name, email and username lookups.
+  humanURL: https://namegender.com/docs
+  tags:
+  - Gender
+  properties:
+  - type: OpenAPI
+    url: openapi/namegender-gender-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/namegender-countries-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-batch-job-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-bulk-request-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-bulk-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-account-response-schema.json
+  - type: JSONSchema
+    url: json-schema/namegender-single-response-schema.json
+- aid: namegender:namegender-webhooks-api
+  name: NameGender Webhooks API
+  description: Requests NameGender sends to your server when a file job finishes or credits run low.
+  humanURL: https://namegender.com/docs
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/namegender-webhooks-api-openapi.yml
   - type: JSONSchema
     url: json-schema/namegender-countries-response-schema.json
   - type: JSONSchema

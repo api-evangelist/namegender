@@ -1,0 +1,21 @@
+{
+  "provider": "namegender",
+  "sources": [
+    "_original/namegender-api-openapi.json"
+  ],
+  "outputs": [
+    "namegender-account-api-openapi.yml",
+    "namegender-batches-api-openapi.yml",
+    "namegender-gender-api-openapi.yml",
+    "namegender-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "namegender-api-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+4 apis, 4 total)"
+  ],
+  "skipped": []
+}
