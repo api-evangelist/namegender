@@ -4,6 +4,8 @@ generator: derive-conformance.py
 source: openapi/ (1 document(s), 8 mutating operations)
 idempotency:
   coverage: partial
+  scope:
+  - createBatch
   header: Idempotency-Key
   mechanism: request header / body token declared in the OpenAPI
   evidence: Idempotency-Key on 1 of 8 mutating operations
