@@ -1,29 +1,10 @@
 openapi: 3.2.0
 info:
-  title: NameGender Batches API
+  title: Namegender Batches API
   version: 1.0.0
-  summary: Infer gender from names, emails and usernames, with the evidence behind each answer.
-  description: 'Every lookup endpoint accepts both GET and POST so it can be called from a browser, a shell or a server. All paths live under `/api/v1`; a future breaking change will get a new version prefix instead of altering these.
-
-
-    **Success and failure.** The HTTP status code is the only success signal: a 200 carries the result, anything else carries the error body described below. There is no separate success flag in the JSON.
-
-
-    **Credits.** One credit per resolved name, not per request: a bulk call for 100 names costs 100 credits. Credits are checked before any work starts, so a request is never half-processed. Free accounts get 100 credits per day.
-
-
-    **Rate limit.** 1200 requests per minute per API key by default, counted per key rather than per IP so that several customers behind one address do not share a bucket. Every response carries `X-RateLimit-Remaining`; a 429 carries `Retry-After`.
-
-
-    **Errors.** Every failure, at every status code, returns the same body shape. Branch on the machine-readable `error` field, never on `message`: messages are translated into 22 languages and their wording can change.
-
-
-    **Support.** Each response carries a `request_id`, also sent as the `X-Request-Id` header. Quote it in any support request and we can find the exact call in our logs. You may send your own `X-Request-Id` to correlate with your tracing system.
-
-
-    **Data version.** Responses include `data_version`, the name-dataset snapshot that produced the answer. If a result changes between two calls, comparing this field is the first thing to check.'
   contact:
     url: https://namegender.com/docs
+  description: 'Operations tagged Batches across 2 of this provider''s published API definitions: namegender-api-openapi.json, openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://namegender.com
   description: Production
@@ -166,6 +147,9 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
   /api/v1/batches/{batch}:
     get:
       tags:
@@ -223,6 +207,9 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
   /api/v1/batches/{batch}/result:
     get:
       tags:
@@ -262,6 +249,9 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
   /api/v1/batches/{batch}/start:
     post:
       tags:
@@ -329,149 +319,11 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
 components:
-  responses:
-    '404':
-      description: 'No endpoint at this path, or no such file job on this account. Codes: `unknown_endpoint`, `batch_not_found`.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '410':
-      description: 'The file job has no result to download any more: it failed, was cancelled, expired, or was a single-download result already fetched.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '429':
-      description: 'Rate limit exceeded, or too many file jobs running at once. Wait `retry_after` seconds. Codes: `rate_limited`, `too_many_batches`.'
-      headers:
-        Retry-After:
-          schema:
-            type: integer
-          description: Seconds to wait.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '402':
-      description: Out of credits. Buy more, or wait for the daily free quota to reset at midnight UTC.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '500':
-      description: Unexpected server error. Nothing was charged. Quote `request_id` if it persists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '422':
-      description: 'Input failed validation. `errors` names the offending fields. Codes: `invalid_input`, `too_many_items`, `ai_consent_required`.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: 'No usable API key. Codes: `missing_key`, `invalid_key`, `revoked_key`.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '400':
-      description: 'Bad request. Codes: `missing_input`.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '413':
-      description: Request body too large.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '409':
-      description: 'The file job is not in a state that allows this. `status` says what it is. Codes: `batch_not_startable`, `batch_not_finished`, `batch_in_progress`.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    BatchList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BatchJob'
-        page:
-          type: integer
-        per_page:
-          type: integer
-        total:
-          type: integer
-        has_more:
-          type: boolean
-    Error:
-      type: object
-      description: The one error shape. Returned by every endpoint at every failing status code.
-      required:
-      - error
-      - message
-      - docs
-      properties:
-        error:
-          type: string
-          description: Machine-readable and stable. **Branch on this.** New codes may be added over time, so treat an unrecognised value as a generic failure rather than crashing.
-          enum:
-          - missing_key
-          - invalid_key
-          - revoked_key
-          - blocked
-          - email_not_verified
-          - ip_not_allowed
-          - proxy_secret_required
-          - forbidden
-          - no_credits
-          - missing_input
-          - invalid_input
-          - too_many_items
-          - ai_consent_required
-          - unknown_endpoint
-          - method_not_allowed
-          - payload_too_large
-          - rate_limited
-          - batch_not_found
-          - batch_not_startable
-          - batch_not_finished
-          - batch_in_progress
-          - result_gone
-          - too_many_batches
-          - not_ready
-          - server_error
-        message:
-          type: string
-          description: Human-readable, translated into the caller's language. Wording can change; never parse or compare it.
-        request_id:
-          type:
-          - string
-          - 'null'
-          description: Quote this in support requests.
-          example: req_9c1f5b2a7e0d4a13
-        docs:
-          type: string
-          format: uri
-          description: Link to this error in the documentation.
-        errors:
-          type: object
-          description: Field-level detail. Present on validation failures only.
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        retry_after:
-          type: integer
-          description: Seconds to wait. Present on 429 only, and mirrored in the `Retry-After` header.
     BatchJob:
       type: object
       properties:
@@ -662,6 +514,147 @@ components:
           - string
           - 'null'
           format: date-time
+    Error:
+      type: object
+      description: The one error shape. Returned by every endpoint at every failing status code.
+      required:
+      - error
+      - message
+      - docs
+      properties:
+        error:
+          type: string
+          description: Machine-readable and stable. **Branch on this.** New codes may be added over time, so treat an unrecognised value as a generic failure rather than crashing.
+          enum:
+          - missing_key
+          - invalid_key
+          - revoked_key
+          - blocked
+          - email_not_verified
+          - ip_not_allowed
+          - proxy_secret_required
+          - forbidden
+          - no_credits
+          - missing_input
+          - invalid_input
+          - too_many_items
+          - ai_consent_required
+          - unknown_endpoint
+          - method_not_allowed
+          - payload_too_large
+          - rate_limited
+          - batch_not_found
+          - batch_not_startable
+          - batch_not_finished
+          - batch_in_progress
+          - result_gone
+          - too_many_batches
+          - not_ready
+          - server_error
+        message:
+          type: string
+          description: Human-readable, translated into the caller's language. Wording can change; never parse or compare it.
+        request_id:
+          type:
+          - string
+          - 'null'
+          description: Quote this in support requests.
+          example: req_9c1f5b2a7e0d4a13
+        docs:
+          type: string
+          format: uri
+          description: Link to this error in the documentation.
+        errors:
+          type: object
+          description: Field-level detail. Present on validation failures only.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        retry_after:
+          type: integer
+          description: Seconds to wait. Present on 429 only, and mirrored in the `Retry-After` header.
+    BatchList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchJob'
+        page:
+          type: integer
+        per_page:
+          type: integer
+        total:
+          type: integer
+        has_more:
+          type: boolean
+  responses:
+    '500':
+      description: Unexpected server error. Nothing was charged. Quote `request_id` if it persists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: 'No usable API key. Codes: `missing_key`, `invalid_key`, `revoked_key`.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '402':
+      description: Out of credits. Buy more, or wait for the daily free quota to reset at midnight UTC.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '409':
+      description: 'The file job is not in a state that allows this. `status` says what it is. Codes: `batch_not_startable`, `batch_not_finished`, `batch_in_progress`.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '410':
+      description: 'The file job has no result to download any more: it failed, was cancelled, expired, or was a single-download result already fetched.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '422':
+      description: 'Input failed validation. `errors` names the offending fields. Codes: `invalid_input`, `too_many_items`, `ai_consent_required`.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '400':
+      description: 'Bad request. Codes: `missing_input`.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: 'No endpoint at this path, or no such file job on this account. Codes: `unknown_endpoint`, `batch_not_found`.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '429':
+      description: 'Rate limit exceeded, or too many file jobs running at once. Wait `retry_after` seconds. Codes: `rate_limited`, `too_many_batches`.'
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '413':
+      description: Request body too large.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
@@ -672,3 +665,6 @@ components:
       in: header
       name: X-Api-Key
       description: Alternative header form, for clients that cannot set `Authorization`. Keys are never read from the query string or the request body.
+x-refined-from:
+- namegender-api-openapi.json
+- openapi.json

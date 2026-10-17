@@ -1,7 +1,8 @@
 {
   "provider": "namegender",
   "sources": [
-    "_original/namegender-api-openapi.json"
+    "_original/namegender-api-openapi.json",
+    "openapi.json"
   ],
   "outputs": [
     "namegender-account-api-openapi.yml",
@@ -9,13 +10,26 @@
     "namegender-gender-api-openapi.yml",
     "namegender-webhooks-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "archived openapi.json"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "discovered stray spec: openapi.json",
     "namegender-api-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: written (+4 apis, 4 total)"
+    "openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Account' spans 2 source specs (namegender-api-openapi.json, openapi.json): per-path servers applied",
+    "tag 'Batches' spans 2 source specs (namegender-api-openapi.json, openapi.json): per-path servers applied",
+    "tag 'Gender' spans 2 source specs (namegender-api-openapi.json, openapi.json): per-path servers applied",
+    "tag 'Webhooks' spans 2 source specs (namegender-api-openapi.json, openapi.json): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "namegender-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "namegender-batches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "namegender-gender-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "namegender-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

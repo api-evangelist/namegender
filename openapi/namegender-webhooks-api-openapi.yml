@@ -1,29 +1,10 @@
 openapi: 3.2.0
 info:
-  title: NameGender Webhooks API
+  title: Namegender Webhooks API
   version: 1.0.0
-  summary: Infer gender from names, emails and usernames, with the evidence behind each answer.
-  description: 'Every lookup endpoint accepts both GET and POST so it can be called from a browser, a shell or a server. All paths live under `/api/v1`; a future breaking change will get a new version prefix instead of altering these.
-
-
-    **Success and failure.** The HTTP status code is the only success signal: a 200 carries the result, anything else carries the error body described below. There is no separate success flag in the JSON.
-
-
-    **Credits.** One credit per resolved name, not per request: a bulk call for 100 names costs 100 credits. Credits are checked before any work starts, so a request is never half-processed. Free accounts get 100 credits per day.
-
-
-    **Rate limit.** 1200 requests per minute per API key by default, counted per key rather than per IP so that several customers behind one address do not share a bucket. Every response carries `X-RateLimit-Remaining`; a 429 carries `Retry-After`.
-
-
-    **Errors.** Every failure, at every status code, returns the same body shape. Branch on the machine-readable `error` field, never on `message`: messages are translated into 22 languages and their wording can change.
-
-
-    **Support.** Each response carries a `request_id`, also sent as the `X-Request-Id` header. Quote it in any support request and we can find the exact call in our logs. You may send your own `X-Request-Id` to correlate with your tracing system.
-
-
-    **Data version.** Responses include `data_version`, the name-dataset snapshot that produced the answer. If a result changes between two calls, comparing this field is the first thing to check.'
   contact:
     url: https://namegender.com/docs
+  description: 'Operations tagged Webhooks across 2 of this provider''s published API definitions: namegender-api-openapi.json, openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://namegender.com
   description: Production
@@ -86,6 +67,9 @@ webhooks:
       responses:
         2XX:
           description: Received. Any 2xx status counts; the body is ignored.
+    servers:
+    - url: https://namegender.com
+      description: Production
   batch.failed:
     post:
       tags:
@@ -137,6 +121,9 @@ webhooks:
       responses:
         2XX:
           description: Received. Any 2xx status counts; the body is ignored.
+    servers:
+    - url: https://namegender.com
+      description: Production
   credits.low:
     post:
       tags:
@@ -188,6 +175,9 @@ webhooks:
       responses:
         2XX:
           description: Received. Any 2xx status counts; the body is ignored.
+    servers:
+    - url: https://namegender.com
+      description: Production
   credits.depleted:
     post:
       tags:
@@ -239,6 +229,9 @@ webhooks:
       responses:
         2XX:
           description: Received. Any 2xx status counts; the body is ignored.
+    servers:
+    - url: https://namegender.com
+      description: Production
   webhook.test:
     post:
       tags:
@@ -290,6 +283,9 @@ webhooks:
       responses:
         2XX:
           description: Received. Any 2xx status counts; the body is ignored.
+    servers:
+    - url: https://namegender.com
+      description: Production
 components:
   schemas:
     CreditsAlert:
@@ -323,11 +319,6 @@ components:
           type: string
           format: date-time
           description: When the condition was first seen.
-    WebhookTestObject:
-      type: object
-      properties:
-        message:
-          type: string
     WebhookEvent:
       type: object
       description: Envelope of every webhook request. The raw body is what the signature covers.
@@ -552,6 +543,11 @@ components:
           - string
           - 'null'
           format: date-time
+    WebhookTestObject:
+      type: object
+      properties:
+        message:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http
@@ -562,3 +558,6 @@ components:
       in: header
       name: X-Api-Key
       description: Alternative header form, for clients that cannot set `Authorization`. Keys are never read from the query string or the request body.
+x-refined-from:
+- namegender-api-openapi.json
+- openapi.json

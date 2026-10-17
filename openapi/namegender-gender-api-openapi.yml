@@ -1,29 +1,10 @@
 openapi: 3.2.0
 info:
-  title: NameGender Gender API
+  title: Namegender Gender API
   version: 1.0.0
-  summary: Infer gender from names, emails and usernames, with the evidence behind each answer.
-  description: 'Every lookup endpoint accepts both GET and POST so it can be called from a browser, a shell or a server. All paths live under `/api/v1`; a future breaking change will get a new version prefix instead of altering these.
-
-
-    **Success and failure.** The HTTP status code is the only success signal: a 200 carries the result, anything else carries the error body described below. There is no separate success flag in the JSON.
-
-
-    **Credits.** One credit per resolved name, not per request: a bulk call for 100 names costs 100 credits. Credits are checked before any work starts, so a request is never half-processed. Free accounts get 100 credits per day.
-
-
-    **Rate limit.** 1200 requests per minute per API key by default, counted per key rather than per IP so that several customers behind one address do not share a bucket. Every response carries `X-RateLimit-Remaining`; a 429 carries `Retry-After`.
-
-
-    **Errors.** Every failure, at every status code, returns the same body shape. Branch on the machine-readable `error` field, never on `message`: messages are translated into 22 languages and their wording can change.
-
-
-    **Support.** Each response carries a `request_id`, also sent as the `X-Request-Id` header. Quote it in any support request and we can find the exact call in our logs. You may send your own `X-Request-Id` to correlate with your tracing system.
-
-
-    **Data version.** Responses include `data_version`, the name-dataset snapshot that produced the answer. If a result changes between two calls, comparing this field is the first thing to check.'
   contact:
     url: https://namegender.com/docs
+  description: 'Operations tagged Gender across 2 of this provider''s published API definitions: namegender-api-openapi.json, openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://namegender.com
   description: Production
@@ -175,6 +156,9 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
   /api/v1/gender/bulk:
     post:
       tags:
@@ -205,6 +189,9 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
   /api/v1/gender/countries:
     get:
       tags:
@@ -400,6 +387,9 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
   /api/v1/gender/email:
     get:
       tags:
@@ -541,6 +531,9 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
   /api/v1/gender/username:
     get:
       tags:
@@ -682,8 +675,160 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    servers:
+    - url: https://namegender.com
+      description: Production
 components:
+  examples:
+    known:
+      summary: Recognised name
+      value:
+        credits_charged: 1
+        credits_remaining: 4821
+        data_version: '2026.08'
+        request_id: req_9c1f5b2a7e0d4a13
+        query: Ayşe Yılmaz
+        name: Ayşe
+        first_name: Ayşe
+        middle_name: null
+        last_name: Yılmaz
+        name_type: personal
+        gender: female
+        country: null
+        sample_size: 655
+        probability: 99
+        took_ms: 1
+        source: db
+        confidence: high
+        matched_as: null
+    fuzzy:
+      summary: Resolved by closest spelling — note the capped probability
+      value:
+        credits_charged: 1
+        credits_remaining: 4819
+        data_version: '2026.08'
+        request_id: req_44a0be71c3925fd8
+        query: Micheal
+        name: Micheal
+        first_name: Micheal
+        middle_name: null
+        last_name: null
+        name_type: personal
+        gender: male
+        country: null
+        sample_size: 152388
+        probability: 86
+        took_ms: 2
+        source: fuzzy
+        confidence: high
+        matched_as: michael
+    unknown:
+      summary: Name not in the dataset — a successful "we do not know"
+      value:
+        credits_charged: 1
+        credits_remaining: 4820
+        data_version: '2026.08'
+        request_id: req_1d7e3c9048ba52f6
+        query: Qzzxvv
+        name: Qzzxvv
+        first_name: Qzzxvv
+        middle_name: null
+        last_name: null
+        name_type: personal
+        gender: null
+        country: null
+        sample_size: 0
+        probability: 0
+        took_ms: 1
+        source: none
+        confidence: unknown
+        matched_as: null
+  responses:
+    '500':
+      description: Unexpected server error. Nothing was charged. Quote `request_id` if it persists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '429':
+      description: 'Rate limit exceeded, or too many file jobs running at once. Wait `retry_after` seconds. Codes: `rate_limited`, `too_many_batches`.'
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '402':
+      description: Out of credits. Buy more, or wait for the daily free quota to reset at midnight UTC.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '401':
+      description: 'No usable API key. Codes: `missing_key`, `invalid_key`, `revoked_key`.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '422':
+      description: 'Input failed validation. `errors` names the offending fields. Codes: `invalid_input`, `too_many_items`, `ai_consent_required`.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '400':
+      description: 'Bad request. Codes: `missing_input`.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    BulkResponse:
+      allOf:
+      - $ref: '#/components/schemas/Envelope'
+      - type: object
+        required:
+        - results
+        - summary
+        properties:
+          took_ms:
+            type: integer
+            example: 12
+            description: Whole milliseconds spent resolving the batch on our side, network time excluded.
+          country_source:
+            type:
+            - string
+            - 'null'
+            enum:
+            - country
+            - locale
+            - ip
+            - null
+            description: 'Where the country came from: the `country` parameter, the region of `locale`, the `ip` address, or none of them (null, worldwide answer).'
+          summary:
+            type: object
+            description: Counts for the whole batch.
+            properties:
+              total:
+                type: integer
+                description: Values sent.
+              identified:
+                type: integer
+                description: Values with a non-null `gender`.
+              unknown:
+                type: integer
+                description: 'Values with `gender: null`.'
+              match_rate:
+                type: number
+                description: Percentage identified.
+          results:
+            type: array
+            description: Same order as the names you sent.
+            items:
+              $ref: '#/components/schemas/GenderResult'
     BulkRequest:
       type: object
       required:
@@ -732,115 +877,6 @@ components:
         - Mehmet
         - Andrea
         country: TR
-    GenderResult:
-      type: object
-      required:
-      - query
-      - name
-      - gender
-      - probability
-      - sample_size
-      - source
-      properties:
-        query:
-          type: string
-          description: The input exactly as you sent it.
-        name:
-          type:
-          - string
-          - 'null'
-          description: The first name actually looked up, after stripping titles and surnames.
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: Given name parsed from the input. Present even when `gender` is null, and not charged separately. Titles and initials are never returned. For Chinese, Korean and Japanese script the surname comes first in the input and is returned in `last_name`.
-        middle_name:
-          type:
-          - string
-          - 'null'
-          description: Any further given names between the first name and the surname, for example "Fitzgerald" in "John Fitzgerald Kennedy". Initials are dropped.
-        last_name:
-          type:
-          - string
-          - 'null'
-          description: Surname parsed from the input, including particles such as "van" or "de la". "Smith, John" is read as surname first. With a Spanish-speaking `country` the last two words are both surnames (Pérez García). Always null for usernames, where a surname cannot be told apart from any other word.
-        name_type:
-          type:
-          - string
-          - 'null'
-          enum:
-          - personal
-          - organization
-          - role
-          - null
-          description: '`organization` when the input carries a company marker (Acme LLC, Müller GmbH, Stanford University); `role` for shared mailboxes and placeholder accounts (info@, Customer Service, guest). Both return `gender: null` and no name parts. `personal` means no such marker was found; it does not confirm the input is a real name. null when the input is not a name at all.'
-        gender:
-          type:
-          - string
-          - 'null'
-          enum:
-          - male
-          - female
-          - null
-          description: null means the dataset has no confident answer. This is not an error.
-        probability:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: Share of people with this name who have the reported gender. 0 when unknown. Measured against held-out data, answers at 80+ come true about 95% of the time, so this number runs slightly conservative rather than optimistic.
-        sample_size:
-          type: integer
-          description: How many real people the answer is based on. A probability of 100 from a sample of 3 is weaker than 85 from a sample of 90,000 — read the two fields together. 0 means the source recorded proportions rather than counts.
-        country:
-          type:
-          - string
-          - 'null'
-          description: The country the answer came from, when narrowed.
-        took_ms:
-          type: integer
-          example: 1
-          description: Whole milliseconds spent resolving this value on our side; network time is not included.
-        source:
-          type: string
-          enum:
-          - db
-          - script
-          - fuzzy
-          - llm
-          - cache
-          - none
-          description: How the answer was reached. `db` exact match; `script` matched after transliterating a non-Latin script; `fuzzy` closest spelling; `llm` language model; `none` no answer. Use it to decide how much to trust a row.
-        confidence:
-          type: string
-          enum:
-          - high
-          - medium
-          - low
-          - unverified
-          - unknown
-          description: 'Sample size bucket: high ≥100 people, medium ≥25, low ≥1, unverified when the source gave proportions instead of counts.'
-        matched_as:
-          type:
-          - string
-          - 'null'
-          description: For `fuzzy` and `script` sources, the dictionary entry that was actually matched. Always inspect this before accepting a fuzzy result.
-    SingleResponse:
-      allOf:
-      - $ref: '#/components/schemas/Envelope'
-      - type: object
-        properties:
-          country_source:
-            type:
-            - string
-            - 'null'
-            enum:
-            - country
-            - locale
-            - ip
-            - null
-            description: 'Where the country came from: the `country` parameter, the region of `locale`, the `ip` address, or none of them (null, worldwide answer).'
-      - $ref: '#/components/schemas/GenderResult'
     Envelope:
       type: object
       required:
@@ -939,49 +975,6 @@ components:
           items:
             type: string
           description: Every country the name occurs in, counted or not, alphabetically.
-    BulkResponse:
-      allOf:
-      - $ref: '#/components/schemas/Envelope'
-      - type: object
-        required:
-        - results
-        - summary
-        properties:
-          took_ms:
-            type: integer
-            example: 12
-            description: Whole milliseconds spent resolving the batch on our side, network time excluded.
-          country_source:
-            type:
-            - string
-            - 'null'
-            enum:
-            - country
-            - locale
-            - ip
-            - null
-            description: 'Where the country came from: the `country` parameter, the region of `locale`, the `ip` address, or none of them (null, worldwide answer).'
-          summary:
-            type: object
-            description: Counts for the whole batch.
-            properties:
-              total:
-                type: integer
-                description: Values sent.
-              identified:
-                type: integer
-                description: Values with a non-null `gender`.
-              unknown:
-                type: integer
-                description: 'Values with `gender: null`.'
-              match_rate:
-                type: number
-                description: Percentage identified.
-          results:
-            type: array
-            description: Same order as the names you sent.
-            items:
-              $ref: '#/components/schemas/GenderResult'
     Error:
       type: object
       description: The one error shape. Returned by every endpoint at every failing status code.
@@ -1042,112 +1035,115 @@ components:
         retry_after:
           type: integer
           description: Seconds to wait. Present on 429 only, and mirrored in the `Retry-After` header.
-  responses:
-    '429':
-      description: 'Rate limit exceeded, or too many file jobs running at once. Wait `retry_after` seconds. Codes: `rate_limited`, `too_many_batches`.'
-      headers:
-        Retry-After:
-          schema:
-            type: integer
-          description: Seconds to wait.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '402':
-      description: Out of credits. Buy more, or wait for the daily free quota to reset at midnight UTC.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '500':
-      description: Unexpected server error. Nothing was charged. Quote `request_id` if it persists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '422':
-      description: 'Input failed validation. `errors` names the offending fields. Codes: `invalid_input`, `too_many_items`, `ai_consent_required`.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '400':
-      description: 'Bad request. Codes: `missing_input`.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    '401':
-      description: 'No usable API key. Codes: `missing_key`, `invalid_key`, `revoked_key`.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  examples:
-    known:
-      summary: Recognised name
-      value:
-        credits_charged: 1
-        credits_remaining: 4821
-        data_version: '2026.08'
-        request_id: req_9c1f5b2a7e0d4a13
-        query: Ayşe Yılmaz
-        name: Ayşe
-        first_name: Ayşe
-        middle_name: null
-        last_name: Yılmaz
-        name_type: personal
-        gender: female
-        country: null
-        sample_size: 655
-        probability: 99
-        took_ms: 1
-        source: db
-        confidence: high
-        matched_as: null
-    unknown:
-      summary: Name not in the dataset — a successful "we do not know"
-      value:
-        credits_charged: 1
-        credits_remaining: 4820
-        data_version: '2026.08'
-        request_id: req_1d7e3c9048ba52f6
-        query: Qzzxvv
-        name: Qzzxvv
-        first_name: Qzzxvv
-        middle_name: null
-        last_name: null
-        name_type: personal
-        gender: null
-        country: null
-        sample_size: 0
-        probability: 0
-        took_ms: 1
-        source: none
-        confidence: unknown
-        matched_as: null
-    fuzzy:
-      summary: Resolved by closest spelling — note the capped probability
-      value:
-        credits_charged: 1
-        credits_remaining: 4819
-        data_version: '2026.08'
-        request_id: req_44a0be71c3925fd8
-        query: Micheal
-        name: Micheal
-        first_name: Micheal
-        middle_name: null
-        last_name: null
-        name_type: personal
-        gender: male
-        country: null
-        sample_size: 152388
-        probability: 86
-        took_ms: 2
-        source: fuzzy
-        confidence: high
-        matched_as: michael
+    SingleResponse:
+      allOf:
+      - $ref: '#/components/schemas/Envelope'
+      - type: object
+        properties:
+          country_source:
+            type:
+            - string
+            - 'null'
+            enum:
+            - country
+            - locale
+            - ip
+            - null
+            description: 'Where the country came from: the `country` parameter, the region of `locale`, the `ip` address, or none of them (null, worldwide answer).'
+      - $ref: '#/components/schemas/GenderResult'
+    GenderResult:
+      type: object
+      required:
+      - query
+      - name
+      - gender
+      - probability
+      - sample_size
+      - source
+      properties:
+        query:
+          type: string
+          description: The input exactly as you sent it.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The first name actually looked up, after stripping titles and surnames.
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: Given name parsed from the input. Present even when `gender` is null, and not charged separately. Titles and initials are never returned. For Chinese, Korean and Japanese script the surname comes first in the input and is returned in `last_name`.
+        middle_name:
+          type:
+          - string
+          - 'null'
+          description: Any further given names between the first name and the surname, for example "Fitzgerald" in "John Fitzgerald Kennedy". Initials are dropped.
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Surname parsed from the input, including particles such as "van" or "de la". "Smith, John" is read as surname first. With a Spanish-speaking `country` the last two words are both surnames (Pérez García). Always null for usernames, where a surname cannot be told apart from any other word.
+        name_type:
+          type:
+          - string
+          - 'null'
+          enum:
+          - personal
+          - organization
+          - role
+          - null
+          description: '`organization` when the input carries a company marker (Acme LLC, Müller GmbH, Stanford University); `role` for shared mailboxes and placeholder accounts (info@, Customer Service, guest). Both return `gender: null` and no name parts. `personal` means no such marker was found; it does not confirm the input is a real name. null when the input is not a name at all.'
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - male
+          - female
+          - null
+          description: null means the dataset has no confident answer. This is not an error.
+        probability:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Share of people with this name who have the reported gender. 0 when unknown. Measured against held-out data, answers at 80+ come true about 95% of the time, so this number runs slightly conservative rather than optimistic.
+        sample_size:
+          type: integer
+          description: How many real people the answer is based on. A probability of 100 from a sample of 3 is weaker than 85 from a sample of 90,000 — read the two fields together. 0 means the source recorded proportions rather than counts.
+        country:
+          type:
+          - string
+          - 'null'
+          description: The country the answer came from, when narrowed.
+        took_ms:
+          type: integer
+          example: 1
+          description: Whole milliseconds spent resolving this value on our side; network time is not included.
+        source:
+          type: string
+          enum:
+          - db
+          - script
+          - fuzzy
+          - llm
+          - cache
+          - none
+          description: How the answer was reached. `db` exact match; `script` matched after transliterating a non-Latin script; `fuzzy` closest spelling; `llm` language model; `none` no answer. Use it to decide how much to trust a row.
+        confidence:
+          type: string
+          enum:
+          - high
+          - medium
+          - low
+          - unverified
+          - unknown
+          description: 'Sample size bucket: high ≥100 people, medium ≥25, low ≥1, unverified when the source gave proportions instead of counts.'
+        matched_as:
+          type:
+          - string
+          - 'null'
+          description: For `fuzzy` and `script` sources, the dictionary entry that was actually matched. Always inspect this before accepting a fuzzy result.
   securitySchemes:
     bearerAuth:
       type: http
@@ -1158,3 +1154,6 @@ components:
       in: header
       name: X-Api-Key
       description: Alternative header form, for clients that cannot set `Authorization`. Keys are never read from the query string or the request body.
+x-refined-from:
+- namegender-api-openapi.json
+- openapi.json
