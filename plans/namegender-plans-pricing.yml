@@ -61,3 +61,88 @@ plans:
   price: 990.0
   description: 50,000,000 credits
 docs: https://namegender.com/pricing
+x-canonical:
+  generated: '2026-10-18'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: 5K
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 25K
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 50K
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 100K
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 200K
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 300K
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 500K
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 1M
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 2M
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 5M
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 10M
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 20M
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: 50M
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
