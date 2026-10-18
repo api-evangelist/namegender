@@ -13,6 +13,12 @@ created: '2026-10-06'
 modified: '2026-10-06'
 tags:
 - Gender
+- Name
+- Data Enrichment
+- Demographics
+- Bulk
+tags_raw:
+- Gender
 - Names
 - Data Enrichment
 - API
@@ -163,6 +169,8 @@ apis:
   description: Requests NameGender sends to your server when a file job finishes or credits run low.
   humanURL: https://namegender.com/docs
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
