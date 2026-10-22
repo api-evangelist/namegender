@@ -34,3 +34,33 @@
     detected: '2026-10-18'
   status: not-a-workflow
   arazzo: null
+- slug: namegender-cran
+  label: CRAN
+  partner_name: CRAN
+  category: official SDK (R)
+  type: register
+  channel: package-registry
+  evidence: https://cran.r-project.org/package=namegender
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: CRAN (packages.rds, the public package metadata table)
+    spec_file: null
+    language: R
+    packages:
+    - name: namegender
+      version: 0.7.1
+      title: Client for the 'NameGender' Name-to-Gender API
+      released: '2026-10-18'
+      released_field: Published
+      lapsed: false
+      page: https://cran.r-project.org/package=namegender
+      repo_leg: domain:namegender.com
+      publisher_leg: email:namegender.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official R package on CRAN: distribution, not an integration; lapsed = no release in 24 months'
+    detected_by: sweep-cran-r-packages.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
