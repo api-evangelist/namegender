@@ -1,0 +1,14 @@
+{
+  "repo": "namegender",
+  "feeds": [
+    {
+      "source": "https://namegender.com/blog",
+      "feed_url": "https://namegender.com/blog/feed.xml",
+      "title": "",
+      "saved": 8,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 8,
+  "fetched": "2026-10-17T14:53:57Z"
+}
