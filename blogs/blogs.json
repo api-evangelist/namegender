@@ -5,10 +5,17 @@
       "source": "https://namegender.com/blog",
       "feed_url": "https://namegender.com/blog/feed.xml",
       "title": "",
-      "saved": 8,
+      "saved": 0,
       "method": "discovered"
+    },
+    {
+      "source": "https://namegender.com/blog/feed.xml",
+      "feed_url": "https://namegender.com/blog/feed.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "post_count": 8,
-  "fetched": "2026-10-17T14:53:57Z"
+  "post_count": 20,
+  "fetched": "2026-10-24T12:29:31Z"
 }
