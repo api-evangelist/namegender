@@ -64,5 +64,142 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-NameGender is a company surfaced via the API Evangelist harvest backlog (source: new-submission) and added to the network as a stub for full-pipeline profiling.
-- https://namegender.com/apis.json
+NameGender provides a gender detection API that returns gender, probability, and supporting evidence for first names, full names, emails, or usernames. It supports multiple languages and countries, offers a free tier with 100 daily credits, and includes detailed documentation, pricing, client libraries, and research resources.
+
+**Areas:** Gender · Name · Data Enrichment · Demographics · Bulk
+
+## NameGender on APIs.io
+
+Everything profiled for NameGender is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/namegender/](https://apis.io/providers/namegender/)** — or go straight to one of the APIs or properties below.
+
+### APIs (4)
+
+- [NameGender Account API](https://apis.io/apis/namegender/namegender-account-api/) — Credit balance and key status.
+- [NameGender Batches API](https://apis.io/apis/namegender/namegender-batches-api/) — Upload a CSV or XLSX file and download it back with gender columns added.
+- [NameGender Gender API](https://apis.io/apis/namegender/namegender-gender-api/) — Name, email and username lookups.
+- [NameGender Webhooks API](https://apis.io/apis/namegender/namegender-webhooks-api/) — Requests NameGender sends to your server when a file job finishes or credits run low.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Namegender Webhooks](https://apis.io/asyncapis/namegender/namegender-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [namegender-mcp.yml](https://apis.io/servers/namegender/namegender-mcp-yml/)
+
+#### JSON Schema (6)
+
+The data models the API reads and writes.
+
+- [AccountResponse](https://apis.io/schemas/namegender/namegender-account-response/)
+- [BatchJob](https://apis.io/schemas/namegender/namegender-batch-job/)
+- [BulkRequest](https://apis.io/schemas/namegender/namegender-bulk-request/)
+- [BulkResponse](https://apis.io/schemas/namegender/namegender-bulk-response/)
+- [CountriesResponse](https://apis.io/schemas/namegender/namegender-countries-response/)
+- [SingleResponse](https://apis.io/schemas/namegender/namegender-single-response/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Namegender Context](https://apis.io/jsonld/namegender/namegender-context/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [NameGender API Rules](https://apis.io/rules/namegender/namegender-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Namegender Domain Security](https://apis.io/security/namegender/namegender-domain-security/)
+- [Namegender Vulnerability Disclosure](https://apis.io/security/namegender/namegender-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Namegender Plans Pricing](https://apis.io/plans/namegender/namegender-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://namegender.com/apis.json)
+- [Documentation](https://namegender.com/docs)
+- [Getting started](https://namegender.com/docs#quickstart)
+- [API reference](https://namegender.com/openapi.json)
+- [Pricing](https://namegender.com/pricing)
+- [Sign up](https://namegender.com/register)
+- [Support](https://namegender.com/support)
+- [Changelog](https://namegender.com/changelog)
+- [Blog](https://namegender.com/blog)
+- [Security](https://namegender.com/changelog#security)
+- [Terms of service](https://namegender.com/terms)
+- [Privacy policy](https://namegender.com/privacy-policy)
+- [Status](https://namegender.com/status)
+
+## API Evangelist rating
+
+**Kin Score 60.6** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 60.7 |
+| Contract quality | 73.5 |
+| Contract governance | 22.0 |
+| Operational transparency | 57.9 |
+| Developer ergonomics | 50.0 |
+| Access clarity | 76.3 |
+
+**Agent readiness 37.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/namegender/](https://apis.io/providers/namegender/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for NameGender: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/namegender/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
